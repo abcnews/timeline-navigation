@@ -1,12 +1,11 @@
 const { h, render } = require('preact');
-
-const PROJECT_NAME = 'timeline';
-const root = document.querySelector(`[data-${PROJECT_NAME}-root]`);
+const { getTimelineSections } = require('./loader');
 
 function init() {
   const App = require('./components/App');
-
-  render(<App projectName={PROJECT_NAME} />, root, root.firstChild);
+  getTimelineSections().forEach(section => {
+    render(<App section={section} />, section.mountNode, section.mountNode.firstChild);
+  });
 }
 
 init();
@@ -17,7 +16,6 @@ if (module.hot) {
       init();
     } catch (err) {
       const ErrorBox = require('./components/ErrorBox');
-
       render(<ErrorBox error={err} />, root, root.firstChild);
     }
   });
@@ -25,6 +23,5 @@ if (module.hot) {
 
 if (process.env.NODE_ENV === 'development') {
   require('preact/devtools');
-
-  console.debug(`[${PROJECT_NAME}] public path: ${__webpack_public_path__}`);
+  console.debug(`[Timelines] public path: ${__webpack_public_path__}`);
 }

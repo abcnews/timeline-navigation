@@ -9,13 +9,17 @@
   ],
   "aunty": "preact-app",
   "scripts": {
-    "start": "aunty serve"
+    "start": "aunty serve",
+    "test": "jest"
   },
   "devDependencies": {
-    "@abcnews/aunty": "5.5.x"
+    "@abcnews/aunty": "5.5.x",
+    "jest": "^21.2.1"
   },
   "dependencies": {
+    "date-fns": "^1.28.5",
     "preact": "^8.2.5",
-    "preact-compat": "^3.17.0"
+    "preact-compat": "^3.17.0",
+    "scroll-into-view": "^1.9.1"
   }
 }
