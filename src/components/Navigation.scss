@@ -1,12 +1,24 @@
 .wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 10px;
   background: #ddd;
   display: flex;
   flex-direction: column;
   border-radius: 100px;
+}
+
+.before {
+  position: absolute;
+  top: 0;
+}
+
+.during {
+  position: fixed;
+  top: 0;
+}
+
+.after {
+  position: absolute;
+  bottom: 0;
 }
 
 .event {

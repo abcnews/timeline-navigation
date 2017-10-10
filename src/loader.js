@@ -73,21 +73,14 @@ function getEvents(section) {
 
   // Collect the event content with its correspoinding date
   section.nodes.forEach((node, index) => {
-    
-    
-    TODO: THIS IS NOT CAPTURING THE H2 BEFOE EACH H3
-
-    
     if (node.tagName) {
       if (node.tagName.toLowerCase() === 'h2') {
-
+        pushEvent();
       } else if (node.tagName.toLowerCase() === 'h3') {
         pushEvent();
         nextDate = FuzzyDates.parse(node.innerText, nextDate ? nextDate.sortableDate : null);
       }
-    }
 
-    if (node.tagName) {
       // It's content
       nextNodes.push(node);
       // Remove this node from the DOM
@@ -99,6 +92,8 @@ function getEvents(section) {
       pushEvent();
     }
   });
+
+  console.log('EVENTS', events);
 
   return events.sort(FuzzyDates.compare);
 }

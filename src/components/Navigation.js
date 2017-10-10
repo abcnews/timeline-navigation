@@ -11,14 +11,10 @@ class Navigation extends Component {
   }
 
   scrollToEvent(id) {
-    scrollIntoView(document.getElementById(`event-${id}`), { align: { top: 0.1 } });
+    scrollIntoView(document.getElementById(`event-${id}`), { align: { top: 0.05 } });
   }
 
-  render({ events }) {
-    const wrapperStyle = {
-      height: window.innerHeight + 'px'
-    };
-
+  render({ style, attachment, events }) {
     const firstEvent = events[0].date.getTime();
     const lastEvent = events[events.length - 1].date.getTime();
     const timeDistance = lastEvent - firstEvent;
@@ -35,7 +31,7 @@ class Navigation extends Component {
     });
 
     return (
-      <div className={styles.wrapper} ref={el => (this.wrapper = el)} style={wrapperStyle}>
+      <div style={style} className={`${styles.wrapper} ${styles[attachment]}`}>
         {jiggledEvents.map(event => {
           if (event.distanceToNextEvent) {
             return <div className={styles.divider} style={{ height: event.distanceToNextEvent + '%' }} />;
