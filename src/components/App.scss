@@ -1,7 +1,16 @@
+:global(.subcolumns) {
+  overflow: visible;
+}
+
 .wrapper {
   position: relative;
 }
 
 .content {
-  padding-left: 20px;
+  padding-left: 120px;
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 }

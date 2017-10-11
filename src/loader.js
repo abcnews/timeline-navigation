@@ -1,4 +1,4 @@
-const FuzzyDates = require('./fuzzy-dates');
+const FuzzyDates = require('@abcnews/fuzzy-dates');
 
 /**
  * Get references to any timeline sections in the article
@@ -92,8 +92,6 @@ function getEvents(section) {
       pushEvent();
     }
   });
-
-  console.log('EVENTS', events);
 
   return events.sort(FuzzyDates.compare);
 }

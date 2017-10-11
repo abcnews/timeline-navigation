@@ -8,26 +8,54 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.onScroll = this.onScroll.bind(this);
+    this.onViewPortChanged = this.onViewPortChanged.bind(this);
 
     this.state = {
-      timelineAttachment: 'before'
+      currentEvent: null,
+      timelineAttachment: 'before',
+      indented: false
     };
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', this.onScroll);
+    window.addEventListener('scroll', this.onViewPortChanged);
+    window.addEventListener('resize', this.onViewPortChanged);
+    this.onViewPortChanged();
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('scroll', this.onViewPortChanged);
+    window.removeEventListener('resize', this.onViewPortChanged);
   }
 
-  onScroll() {
+  onViewPortChanged() {
     if (!this.wrapper) return;
 
     const bounds = this.wrapper.getBoundingClientRect();
 
+    // See if the timeline needs to be indented
+    if (this.wrapper) {
+      this.setState(state => ({
+        indented: this.wrapper.getBoundingClientRect().left < 150
+      }));
+    }
+
+    // Check to see if a timeline event is active
+    const fold = window.innerHeight * 0.05;
+
+    const pastEvents = this.props.section.events.filter(event => {
+      return event.nodes[0] && event.nodes[0].getBoundingClientRect().top < fold;
+    });
+
+    let lastSeenEvent = pastEvents[pastEvents.length - 1];
+    if (!lastSeenEvent) lastSeenEvent = this.props.section.events[0];
+    if (this.state.currentEvent !== lastSeenEvent) {
+      this.setState(state => ({
+        currentEvent: lastSeenEvent
+      }));
+    }
+
+    // Attach the timeline navigation
     let timelineAttachment;
     if (bounds.top > 0) {
       timelineAttachment = 'before';
@@ -42,13 +70,28 @@ class App extends Component {
 
   render({ section }) {
     const timelineStyle = {
-      height: window.innerHeight + 'px'
+      height: window.innerHeight + 'px',
+      marginLeft: '-30px'
     };
+
+    const contentStyle = {
+      paddingLeft: '0px'
+    };
+
+    if (this.state.indented) {
+      timelineStyle.marginLeft = '100px';
+      contentStyle.paddingLeft = '130px';
+    }
 
     return (
       <div className={styles.wrapper} ref={el => (this.wrapper = el)}>
-        <Navigation style={timelineStyle} events={section.events} attachment={this.state.timelineAttachment} />
-        <div className={styles.content}>
+        <Navigation
+          style={timelineStyle}
+          events={section.events}
+          currentEvent={this.state.currentEvent}
+          attachment={this.state.timelineAttachment}
+        />
+        <div className={styles.content} style={contentStyle}>
           {section.events.map(event => <TimelineEvent id={event.idx} nodes={event.nodes} />)}
         </div>
       </div>
