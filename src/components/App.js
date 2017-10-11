@@ -13,7 +13,8 @@ class App extends Component {
     this.state = {
       currentEvent: null,
       timelineAttachment: 'before',
-      indented: false
+      indented: false,
+      showLabels: true
     };
   }
 
@@ -34,11 +35,10 @@ class App extends Component {
     const bounds = this.wrapper.getBoundingClientRect();
 
     // See if the timeline needs to be indented
-    if (this.wrapper) {
-      this.setState(state => ({
-        indented: this.wrapper.getBoundingClientRect().left < 150
-      }));
-    }
+    this.setState(state => ({
+      showLabels: bounds.width > 500,
+      indented: bounds.left < 150
+    }));
 
     // Check to see if a timeline event is active
     const fold = window.innerHeight * 0.05;
@@ -79,8 +79,8 @@ class App extends Component {
     };
 
     if (this.state.indented) {
-      timelineStyle.marginLeft = '100px';
-      contentStyle.paddingLeft = '130px';
+      timelineStyle.marginLeft = this.state.showLabels ? '100px' : '20px';
+      contentStyle.paddingLeft = this.state.showLabels ? '130px' : '50px';
     }
 
     return (
@@ -90,6 +90,7 @@ class App extends Component {
           events={section.events}
           currentEvent={this.state.currentEvent}
           attachment={this.state.timelineAttachment}
+          showLabels={this.state.showLabels}
         />
         <div className={styles.content} style={contentStyle}>
           {section.events.map(event => <TimelineEvent id={event.idx} nodes={event.nodes} />)}

@@ -15,7 +15,7 @@ class Navigation extends Component {
     scrollIntoView(document.getElementById(`event-${id}`), { align: { top: 0.05 } });
   }
 
-  render({ style, attachment, events, currentEvent }) {
+  render({ style, showLabels, attachment, events, currentEvent }) {
     const firstEvent = events[0].date.getTime();
     const lastEvent = events[events.length - 1].date.getTime();
     const timeDistance = lastEvent - firstEvent;
@@ -33,6 +33,7 @@ class Navigation extends Component {
 
     return (
       <div style={style} className={`${styles.wrapper} ${styles[attachment]}`}>
+        {!this.props.showLabels && <div className={styles.trackLabel}>{FuzzyDates.formatDate(events[0].date)}</div>}
         <div className={styles.track}>
           {jiggledEvents.map(event => {
             if (event.distanceToNextEvent) {
@@ -43,12 +44,15 @@ class Navigation extends Component {
                   className={`${styles.event} ${event === currentEvent ? styles.current : ''}`}
                   title={event.date.original}
                   onClick={e => this.scrollToEvent(event.idx)}>
-                  <div className={styles.label}>{FuzzyDates.formatDate(event.date)}</div>
+                  {showLabels && <div className={styles.label}>{FuzzyDates.formatDate(event.date)}</div>}
                 </div>
               );
             }
           })}
         </div>
+        {!this.props.showLabels && (
+          <div className={styles.trackLabel}>{FuzzyDates.formatDate(events[events.length - 1].date)}</div>
+        )}
       </div>
     );
   }
