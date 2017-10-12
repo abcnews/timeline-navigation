@@ -1,4 +1,4 @@
-# Timeline
+# Timeline Navigation
 
 Turn a collection of dates into a timeline.
 
