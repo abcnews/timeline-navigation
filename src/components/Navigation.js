@@ -33,7 +33,9 @@ class Navigation extends Component {
 
     return (
       <div style={style} className={`${styles.wrapper} ${styles[attachment]}`}>
-        {!this.props.showLabels && <div className={styles.trackLabel}>{FuzzyDates.formatDate(events[0].date)}</div>}
+        {!this.props.showLabels && (
+          <div className={styles.trackLabel}>{FuzzyDates.formatDate(events[0].date, true)}</div>
+        )}
         <div className={styles.track}>
           {jiggledEvents.map(event => {
             if (event.distanceToNextEvent) {
@@ -51,7 +53,7 @@ class Navigation extends Component {
           })}
         </div>
         {!this.props.showLabels && (
-          <div className={styles.trackLabel}>{FuzzyDates.formatDate(events[events.length - 1].date)}</div>
+          <div className={styles.trackLabel}>{FuzzyDates.formatDate(events[events.length - 1].date, true)}</div>
         )}
       </div>
     );
