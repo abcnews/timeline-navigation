@@ -78,7 +78,7 @@ function getEvents(section) {
         pushEvent();
       } else if (node.tagName.toLowerCase() === 'h3') {
         pushEvent();
-        nextDate = FuzzyDates.parse(node.innerText, nextDate ? nextDate.sortableDate : null);
+        nextDate = FuzzyDates.parse(node.innerText, nextDate);
       }
 
       // It's content
@@ -93,7 +93,7 @@ function getEvents(section) {
     }
   });
 
-  return events.sort(FuzzyDates.compare);
+  return events;
 }
 
 module.exports = { getTimelineSections };
