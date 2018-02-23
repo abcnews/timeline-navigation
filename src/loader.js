@@ -41,7 +41,7 @@ function getTimelineSections() {
 
 /**
  * Extract any event information from a timeline section
- * @param {object} section 
+ * @param {object} section
  */
 function getEvents(section) {
   let events = [];
@@ -51,9 +51,7 @@ function getEvents(section) {
   let nextNodes = [];
 
   try {
-    const nextDate = FuzzyDates.parse(
-      document.querySelector('[property="article:published_time"]').getAttribute('content')
-    );
+    nextDate = FuzzyDates.parse(document.querySelector('[property="article:published_time"]').getAttribute('content'));
   } catch (ex) {
     // Do nothing
   }
