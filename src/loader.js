@@ -69,10 +69,10 @@ function getEvents(section) {
     nextNodes = [];
   }
 
-  // Collect the event content with its correspoinding date
+  // Collect the event content with its corresponding date
   section.nodes.forEach((node, index) => {
     if (node.tagName) {
-      if (node.tagName.toLowerCase() === 'h2') {
+      if (node.tagName.toLowerCase() === 'h2' && nextNodes.length > 0) {
         pushEvent();
       } else if (node.tagName.toLowerCase() === 'h3') {
         pushEvent();
