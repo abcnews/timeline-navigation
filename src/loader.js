@@ -58,7 +58,7 @@ function getEvents(section) {
 
   function pushEvent() {
     // There might be just 1 H2 tag in there, wait for the next one
-    if (nextNodes.length === 1 || !nextDate) return;
+    if (nextNodes.length <= 1 || !nextDate) return;
 
     events.push({
       idx: ++idx,

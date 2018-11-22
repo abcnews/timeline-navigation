@@ -10,15 +10,17 @@ function jiggleEvents(events) {
   const timeDistance = lastEvent - firstEvent;
 
   let jiggledEvents = [];
-  events.sort((a, b) => FuzzyDates.compare(a.date, b.date)).forEach((event, index) => {
-    jiggledEvents.push(event);
+  events
+    .sort((a, b) => FuzzyDates.compare(a.date, b.date))
+    .forEach((event, index) => {
+      jiggledEvents.push(event);
 
-    // Check how far away the next event is
-    if (index !== events.length - 1) {
-      const distanceToNextEvent = (events[index + 1].date.getTime() - event.date.getTime()) / timeDistance * 100;
-      jiggledEvents.push({ distanceToNextEvent });
-    }
-  });
+      // Check how far away the next event is
+      if (index !== events.length - 1) {
+        const distanceToNextEvent = ((events[index + 1].date.getTime() - event.date.getTime()) / timeDistance) * 100;
+        jiggledEvents.push({ distanceToNextEvent });
+      }
+    });
 
   return jiggledEvents;
 }
