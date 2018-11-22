@@ -7,13 +7,13 @@
   "contributors": [
     "Nathan Hoad <nathan@nathanhoad.net>"
   ],
-  "aunty": "preact-app",
+  "aunty": "preact",
   "scripts": {
     "start": "aunty serve",
     "test": "jest"
   },
   "devDependencies": {
-    "@abcnews/aunty": "5.5.x",
+    "@abcnews/aunty": "9.10.0",
     "jest": "^21.2.1"
   },
   "dependencies": {

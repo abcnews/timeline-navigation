@@ -6,7 +6,7 @@ const FuzzyDates = require('@abcnews/fuzzy-dates');
  */
 function getTimelineSections() {
   if (!window._timelines) {
-    window._timelines = [].slice.call(document.querySelectorAll(`a[name^="timeline"`)).map(startNode => {
+    window._timelines = [].slice.call(document.querySelectorAll(`a[name^="timeline"]`)).map(startNode => {
       let section = {
         startNode,
         nodes: []
