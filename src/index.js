@@ -2,6 +2,12 @@ const { h, render } = require('preact');
 const { getTimelineSections } = require('./loader');
 
 function init() {
+  // Fix some weird styling that the footer kills
+  const firstSubcolumn = document.querySelector('.subcolumns');
+  if (firstSubcolumn) {
+    firstSubcolumn.style.setProperty('overflow', 'visible');
+  }
+
   const App = require('./components/App');
   getTimelineSections().forEach(section => {
     render(<App section={section} />, section.mountNode, section.mountNode.firstChild);
